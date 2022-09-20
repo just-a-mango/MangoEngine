@@ -11,7 +11,6 @@ char null = ' ';
 char full = '+';
 int canvas_width = 120;
 int canvas_height = 30;
-bool finished_init = false;
 
 
 void refresh_canvas(int columns, int rows, char null_, char full_) {
@@ -135,22 +134,6 @@ void draw_ellipse(int x, int y, int radius_x, int radius_y, bool fill) {
     force_refresh_canvas();
 }
 
-void draw_rectangle(int x, int y, int width, int height, bool fill) {
-    if (fill) {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                draw_pixel(x + j, y + i, 1);
-            }
-        }
-    } else {
-        draw_line(x, y, x + width, y);
-        draw_line(x + width, y, x + width, y + height);
-        draw_line(x + width, y + height, x, y + height);
-        draw_line(x, y + height, x, y);
-    }
-    force_refresh_canvas();
-}
-
 void draw_square(int x1, int y1, int x2, int y2, bool fill) {
     if (fill) {
         for (int i = x1; i < x2; i++) {
@@ -177,6 +160,7 @@ void draw_square(int x1, int y1, int x2, int y2, bool fill) {
  * @return The width of the letter.
  */
 int draw_letter(char letter, int x, int y) {
+    letter = toupper(letter);
     switch (letter) {
         case 'A':
             draw_line(x, y, x, y + 5);
@@ -325,7 +309,6 @@ int draw_letter(char letter, int x, int y) {
         case ' ': return 3;
         default: return 0;
     }
-    force_refresh_canvas();
 }
 
 string print(const string& s) {
