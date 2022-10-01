@@ -1,4 +1,4 @@
-# MangoEngine
+# Mango-Engine
 A small ASCII graphics engine written in C++
 
 ## How it works
