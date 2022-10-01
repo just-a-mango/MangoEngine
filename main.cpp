@@ -336,17 +336,15 @@ void draw_text(const basic_string<char>& text, int x, int y)
 }
 
 void init() {
-    force_refresh_canvas();
-    draw_canvas_outline();
-//    draw_text(string("tuvwxyz"), 5, 5);
-//    draw_ellipse(10, 10, 10, 10, true);
-    draw_square(10, 5, 20, 15, true);
-    draw_square(30, 5, 40, 15, true);
-    draw_square(10, 20, 40, 21, true);
-    //        draw_triangle(50, 5, 60, 5, 55, 15);
+    // PUT YOUR INITIALIZATION CODE HERE (drawing stuff, setting up variables, etc.)
+    draw_text(string("hello world"), 5, 5);
 }
 
 void tick() {
+    // PUT YOUR GAME LOGIC HERE
+}
+
+[[noreturn]] void engine_tick() {
     int old_columns, old_rows;
     int is_init = 0;
     while(true) {
@@ -361,22 +359,21 @@ void tick() {
         old_rows = rows;
         if (__builtin_expect(!is_init, 0)) {
             init();
+            force_refresh_canvas();
+            draw_canvas_outline();
             is_init = 1;
         }
+        tick();
     }
 }
 
-void init_engine() {
+int main() {
+    // Engine initialization
     std::ios_base::sync_with_stdio(false);
     for (int i = 0; i < canvas_height; i++) {
         for (int j = 0; j < canvas_width; j++) {
             pixels.emplace_back(i, j, 0);
         }
     }
-    tick();
-}
-
-int main() {
-    init_engine();
-    return 0;
+    engine_tick();
 }
